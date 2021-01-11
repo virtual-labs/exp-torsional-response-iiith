@@ -1,6 +1,6 @@
 Equation of motion excluding damping forces
 
-[image](eq1.PNG)
+[image](images/eq1.PNG)
 
 
 For two way unsymmetrical system:
