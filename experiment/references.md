@@ -1,1 +1,3 @@
-### Link your references in here
+- [http://en.wikipedia.org/wiki/Torsion_%28mechanics%29](http://en.wikipedia.org/wiki/Torsion_%28mechanics%29)
+- [http://www.mssu.edu/seg-vm/pict0349.html](http://www.mssu.edu/seg-vm/pict0349.html)
+- [http://en.wikipedia.org/wiki/Torsional_vibration](http://www.mssu.edu/seg-vm/pict0349.html)
