@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
-</head>
-<body>
-		<!-- Your code goes here-->
+	<head>
+		<!-- Add CSS at the head of HTML file -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+		<link rel="stylesheet" href="./css/main.css">
+	</head>
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
-</body>
+	<body class="page">
+		<!-- Your code goes here-->
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<h1 class="title">Torsional Response of Building</h1>
+			</div>
+		</div>
+
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>GROUND MOTION: <span id="demo_motion"></span></p>
+					<input type="range" min="0" max="60" value="30" class="slider" id="motion">
+				</div>
+
+				<button id="play" class="action-button">Play</button>
+				<button id="pause" class="action-button">Pause</button>
+				<button id="restart" class="action-button">Restart</button>
+			</div>
+		</div>
+
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<div class="hero is-small">
+					<div class="hero-body">
+						<canvas id="main"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Add JS at the bottom of HTML file --> 
+		<script src="./js/main.js"></script>
+	</body>
 </html>
