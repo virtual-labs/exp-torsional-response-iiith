@@ -2,10 +2,12 @@
 
 document.addEventListener('DOMContentLoaded', function(){
 
+	const viewButton = document.getElementById('viewButton');
 	const playButton = document.getElementById('play');
 	const pauseButton = document.getElementById('pause');
 	const restartButton = document.getElementById('restart');
 
+	viewButton.addEventListener('click', function() { window.clearTimeout(tmHandle); view = !view; restart(); });
 	pauseButton.addEventListener('click', function() { window.clearTimeout(tmHandle); });
 	playButton.addEventListener('click', function() {  window.clearTimeout(tmHandle); tmHandle = setTimeout(draw, 1000 / fps); });
 	restartButton.addEventListener('click', function() {restart();});
@@ -28,21 +30,39 @@ document.addEventListener('DOMContentLoaded', function(){
 			[bldgTop[3][0], defY],
 		];
 
-		ground = [
-			[startL[0] - 50, defY + height + 40],
-			[startL[0], defY + height - 40],
-			[startR[2] + 50, defY + height - 40],
-			[startR[2], defY + height + 40],
+		legs = [
+			[[startL[0], defY], [startR[0], defY], [startR[0], defY + height], [startL[0], defY + height]],
+			[[startL[1], defY], [startR[1], defY], [startR[1], defY + 2 * height / 3], [startL[1], defY + 2 * height / 3]],
+			[[startL[2], defY], [startR[2], defY], [startR[2], defY + 2 * height / 3], [startL[2], defY + 2 * height / 3]],
+			[[startL[3], defY], [startR[3], defY], [startR[3], defY + height], [startL[3], defY + height]]
 		];
 
-		layer2 = [
-			{...ground[0]},
-			[ground[0][0], defY + height + 40 + thickness],
-			[startR[2] + thickness, defY + height + 40 + thickness],
-			[ground[2][0] + thickness, defY + height - 40 + thickness],
-			{...ground[2]},
-			{...ground[3]},
-		];
+		//ground = [
+			//[startL[0] - 50, defY + height + 40],
+			//[startL[0], defY + height - 40],
+			//[startR[2] + 50, defY + height - 40],
+			//[startR[2], defY + height + 40],
+		//];
+
+		//layer2 = [
+			//{...ground[0]},
+			//[ground[0][0], defY + height + 40 + thickness],
+			//[startR[2] + thickness, defY + height + 40 + thickness],
+			//[ground[2][0] + thickness, defY + height - 40 + thickness],
+			//{...ground[2]},
+			//{...ground[3]},
+		//];
+
+		if(view)
+		{
+			bldgTop[0][1] = defY + height;
+			bldgTop[1][0] = bldgTop[0][0];
+			bldgTop[2][0] = bldgTop[3][0];
+			bldgTop[3][1] = defY + height;
+
+			bldgTopLayer2 = [];
+			legs = [];
+		}
 
 		dirn = -1;
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
@@ -181,6 +201,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	function drawShape(ctx, v)
 	{
+		if(!v.length)
+			return
+
 		ctx.beginPath();
 		ctx.moveTo(v[0][0], v[0][1]);
 
@@ -199,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	//let vibe = 30;
+	let view = 0;	//0 --> horizontal, 1 --> vertical(from top)
 	let mass = [30, 30, 30, 30];
 	let stiff = [30, 30, 30, 30];
 	let com = [0, 0];	//center of mass
@@ -245,6 +269,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		[[startL[2], defY], [startR[2], defY], [startR[2], defY + 2 * height / 3], [startL[2], defY + 2 * height / 3]],
 		[[startL[3], defY], [startR[3], defY], [startR[3], defY + height], [startL[3], defY + height]]
 	];
+
+	if(view)
+	{
+		bldgTop[0][1] = defY + height;
+		bldgTop[1][0] = bldgTop[0][0];
+		bldgTop[2][0] = bldgTop[3][0];
+		bldgTop[3][1] = defY + height;
+
+		bldgTopLayer2 = [];
+		legs = [];
+	}
 
 	//let ground = [
 		//[startL[0] - 50, defY + height + 40],
@@ -315,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(cor[0] - 2, cor[1] - 2, 4, 4);
 		ctx.fillStyle = fill;
 
-		for(let k = 0; k < 4; ++k)
+		for(let k = 0; k < legs.length; ++k)
 		{
 			let v = legs[k];
 
