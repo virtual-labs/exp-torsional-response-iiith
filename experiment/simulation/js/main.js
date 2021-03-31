@@ -51,28 +51,28 @@ document.addEventListener('DOMContentLoaded', function(){
 		restart();
 	};
 
-	function calc(mass, stiff, com, cor, bldgTop)
+	function calc(ent, center, bldgTop)
 	{
-		let totm = 0;
-		com[0] = 0;
-		com[1] = 0;
+		let tot = 0;
+		center[0] = 0;
+		center[1] = 0;
 
-		mass.forEach(function(value, i) {
-			totm += value;
-			let temp = [value * (3 * bldgTop[0][0] + bldgTop[3][0]) / 4, value * (3 * bldgTop[0][1] + bldgTop[1][1]) / 4];
+		ent.forEach(function(value, i) {
+			tot += value;
+			let temp = [value * (3 * bldgTop[0][0] + bldgTop[3][0]) / 4, value * (bldgTop[0][1] + 3 * bldgTop[1][1]) / 4];
 
 			if(i > 1)
 				temp[0] = value * (bldgTop[0][0] + 3 * bldgTop[3][0]) / 4;
 
 			if(i == 0 || i == 3)
-				temp[1] = value * (bldgTop[0][1] + 3 * bldgTop[1][1]) / 4;
+				temp[1] = value * (3 * bldgTop[0][1] + bldgTop[1][1]) / 4;
 
-			com[0] += temp[0];
-			com[1] += temp[1];
+			center[0] += temp[0];
+			center[1] += temp[1];
 		});
 		
-		com[0] /= totm;
-		com[1] /= totm;
+		center[0] /= tot;
+		center[1] /= tot;
 	}
 
 	function curvedArea(ctx, e, gradX, gradY)
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	let vibe = 30;
-	let mass = [1, 1, 1, 1];
+	let mass = [30, 30, 30, 30];
 	let stiff = [30, 30, 30, 30];
 	let com = [0, 0];	//center of mass
 	let cor = [0, 0];	//center of stiffness/resistance
@@ -199,9 +199,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		drawShape(ctx, bldgTopLayer2);
 		ctx.restore();
 
-		calc(mass, stiff, com, cor, bldgTop);
+		calc(mass, com, bldgTop);
 		ctx.fillStyle = "red";
 		ctx.fillRect(com[0], com[1], 3, 3);
+		ctx.fillStyle = fill;
+
+		calc(stiff, cor, bldgTop);
+		ctx.fillStyle = "blue";
+		ctx.fillRect(cor[0], cor[1], 3, 3);
 		ctx.fillStyle = fill;
 
 		for(let k = 0; k < 4; ++k)
