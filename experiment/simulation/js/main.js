@@ -307,12 +307,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		calc(mass, com, bldgTop);
 		ctx.fillStyle = "red";
-		ctx.fillRect(com[0], com[1], 3, 3);
+		ctx.fillRect(com[0] - 2, com[1] - 2, 4, 4);
 		ctx.fillStyle = fill;
 
 		calc(stiff, cor, bldgTop);
 		ctx.fillStyle = "blue";
-		ctx.fillRect(cor[0], cor[1], 3, 3);
+		ctx.fillRect(cor[0] - 2, cor[1] - 2, 4, 4);
 		ctx.fillStyle = fill;
 
 		for(let k = 0; k < 4; ++k)
