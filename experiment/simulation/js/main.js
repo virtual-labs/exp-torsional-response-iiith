@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		mass.forEach(function(value, i) {
 			totm += value;
-			let temp = [value * (bldgTop[0][0] + bldgTop[3][0]) / 4, value * (bldgTop[0][1] + bldgTop[1][1]) / 4];
+			let temp = [value * (3 * bldgTop[0][0] + bldgTop[3][0]) / 4, value * (3 * bldgTop[0][1] + bldgTop[1][1]) / 4];
 
 			if(i > 1)
-				temp[0] *= 3;
+				temp[0] = value * (bldgTop[0][0] + 3 * bldgTop[3][0]) / 4;
 
 			if(i == 0 || i == 3)
-				temp[1] *= 3;
+				temp[1] = value * (bldgTop[0][1] + 3 * bldgTop[1][1]) / 4;
 
 			com[0] += temp[0];
 			com[1] += temp[1];
@@ -92,23 +92,23 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	}
 
-	function drawGround(ctx, ground)
+	function drawShape(ctx, v)
 	{
-		ctx.save();
-		ctx.fillStyle = "pink";
 		ctx.beginPath();
-		ctx.moveTo(ground[0][0], ground[0][1]);
+		ctx.moveTo(v[0][0], v[0][1]);
 
-		for(let i = 0; i < ground.length; ++i)
+		for(let i = 0; i < v.length; ++i)
 		{
-			let next = (i + 1) % ground.length;
-			ctx.lineTo(ground[next][0], ground[next][1]);
+			let next = (i + 1) % v.length;
+			let ratio = 0.5;
+			let ctrl = [(v[i][0] + v[next][0]) * ratio, (v[i][1] + v[next][1]) * ratio];
+
+			ctx.quadraticCurveTo(ctrl[0], ctrl[1], v[next][0], v[next][1]);
 		}
 
 		ctx.closePath();
 		ctx.fill();
 		ctx.stroke();
-		ctx.restore();
 	}
 
 	let vibe = 30;
@@ -183,11 +183,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
 
-		calc(mass, stiff, com, cor, bldgTop);
-		ctx.fillStyle = "red";
-		ctx.fillRect(com[0], com[1], 4, 100);
-		ctx.fillStyle = fill;
-
 		if(dirn == -1)
 		{
 			updateGround(ground, layer2, vibe / scale);
@@ -198,8 +193,16 @@ document.addEventListener('DOMContentLoaded', function(){
 			updateGround(ground, layer2, -1 * vibe / scale);
 		}
 
-		drawGround(ctx, bldgTop);
-		drawGround(ctx, bldgTopLayer2);
+		ctx.save();
+		ctx.fillStyle = "pink";
+		drawShape(ctx, bldgTop);
+		drawShape(ctx, bldgTopLayer2);
+		ctx.restore();
+
+		calc(mass, stiff, com, cor, bldgTop);
+		ctx.fillStyle = "red";
+		ctx.fillRect(com[0], com[1], 3, 3);
+		ctx.fillStyle = fill;
 
 		for(let k = 0; k < 4; ++k)
 		{
@@ -226,22 +229,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				//dirn *= -1;
 			//}
 
-			ctx.beginPath();
-			ctx.moveTo(v[0][0], v[0][1]);
-
-			for(let i = 0; i < v.length; ++i)
-			{
-				let next = (i + 1) % v.length;
-				let ratio = 0.5;
-				let ctrl = [(v[i][0] + v[next][0]) * ratio, (v[i][1] + v[next][1]) * ratio];
-
-				ctx.quadraticCurveTo(ctrl[0], ctrl[1], v[next][0], v[next][1]);
-			}
-
-			ctx.closePath();
-			ctx.fill();
-			ctx.stroke();
-
+			drawShape(ctx, v);
 			legs[k] = v;
 		}
 
