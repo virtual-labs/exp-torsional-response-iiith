@@ -14,10 +14,18 @@ document.addEventListener('DOMContentLoaded', function(){
 	{ 
 		window.clearTimeout(tmHandle); 
 
-		bldg = [
-			[[upL[0], defY], [upR[0], defY], [startR[0], defY + height], [startL[0], defY + height]],
-			[[upL[1], defY], [upR[1], defY], [startR[1], defY + height], [startL[1], defY + height]],
-			[[upL[2], defY], [upR[2], defY], [startR[2], defY + height], [startL[2], defY + height]]
+		bldgTop = [
+			[startL[0] - 50, defY - thickness],
+			[startR[0], defY - 150 - thickness],
+			[startL[3], defY - 150 - thickness],
+			[startR[3] + 50, defY - thickness],
+		];
+
+		bldgTopLayer2 = [
+			[bldgTop[0][0], defY],
+			[bldgTop[0][0], defY - thickness],
+			[bldgTop[3][0], defY - thickness],
+			[bldgTop[3][0], defY],
 		];
 
 		ground = [
@@ -39,6 +47,94 @@ document.addEventListener('DOMContentLoaded', function(){
 		dirn = -1;
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
 	}
+
+	const slider_m1 = document.getElementById("mass1");
+	const output_m1 = document.getElementById("demo_mass1");
+	output_m1.innerHTML = slider_m1.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_m1.oninput = function() {
+		output_m1.innerHTML = this.value;
+		mass[0] = Number(document.getElementById("mass1").value);
+		restart();
+	};
+
+	const slider_m2 = document.getElementById("mass2");
+	const output_m2 = document.getElementById("demo_mass2");
+	output_m2.innerHTML = slider_m2.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_m2.oninput = function() {
+		output_m2.innerHTML = this.value;
+		mass[1] = Number(document.getElementById("mass2").value);
+		restart();
+	};
+
+	const slider_m3 = document.getElementById("mass3");
+	const output_m3 = document.getElementById("demo_mass3");
+	output_m3.innerHTML = slider_m3.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_m3.oninput = function() {
+		output_m3.innerHTML = this.value;
+		mass[2] = Number(document.getElementById("mass3").value);
+		restart();
+	};
+
+	const slider_m4 = document.getElementById("mass4");
+	const output_m4 = document.getElementById("demo_mass4");
+	output_m4.innerHTML = slider_m4.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_m4.oninput = function() {
+		output_m4.innerHTML = this.value;
+		mass[3] = Number(document.getElementById("mass4").value);
+		restart();
+	};
+
+	const slider_s1 = document.getElementById("stiff1");
+	const output_s1 = document.getElementById("demo_stiff1");
+	output_s1.innerHTML = slider_s1.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_s1.oninput = function() {
+		output_s1.innerHTML = this.value;
+		stiff[0] = Number(document.getElementById("stiff1").value);
+		restart();
+	};
+
+	const slider_s2 = document.getElementById("stiff2");
+	const output_s2 = document.getElementById("demo_stiff2");
+	output_s2.innerHTML = slider_s2.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_s2.oninput = function() {
+		output_s2.innerHTML = this.value;
+		stiff[1] = Number(document.getElementById("stiff2").value);
+		restart();
+	};
+
+	const slider_s3 = document.getElementById("stiff3");
+	const output_s3 = document.getElementById("demo_stiff3");
+	output_s3.innerHTML = slider_s3.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_s3.oninput = function() {
+		output_s3.innerHTML = this.value;
+		stiff[2] = Number(document.getElementById("stiff3").value);
+		restart();
+	};
+
+	const slider_s4 = document.getElementById("stiff4");
+	const output_s4 = document.getElementById("demo_stiff4");
+	output_s4.innerHTML = slider_s4.value; // Display the default slider value
+
+	// Update the current slider value (each time you drag the slider handle)
+	slider_s4.oninput = function() {
+		output_s4.innerHTML = this.value;
+		stiff[3] = Number(document.getElementById("stiff4").value);
+		restart();
+	};
 
 	const slider_mot = document.getElementById("motion");
 	const output_mot = document.getElementById("demo_motion");
