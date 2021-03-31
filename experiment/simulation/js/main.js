@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_m1 = document.getElementById("demo_mass1");
 	output_m1.innerHTML = slider_m1.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_m1.oninput = function() {
 		output_m1.innerHTML = this.value;
 		mass[0] = Number(document.getElementById("mass1").value);
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_m2 = document.getElementById("demo_mass2");
 	output_m2.innerHTML = slider_m2.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_m2.oninput = function() {
 		output_m2.innerHTML = this.value;
 		mass[1] = Number(document.getElementById("mass2").value);
@@ -74,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_m3 = document.getElementById("demo_mass3");
 	output_m3.innerHTML = slider_m3.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_m3.oninput = function() {
 		output_m3.innerHTML = this.value;
 		mass[2] = Number(document.getElementById("mass3").value);
@@ -85,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_m4 = document.getElementById("demo_mass4");
 	output_m4.innerHTML = slider_m4.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_m4.oninput = function() {
 		output_m4.innerHTML = this.value;
 		mass[3] = Number(document.getElementById("mass4").value);
@@ -96,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_s1 = document.getElementById("demo_stiff1");
 	output_s1.innerHTML = slider_s1.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_s1.oninput = function() {
 		output_s1.innerHTML = this.value;
 		stiff[0] = Number(document.getElementById("stiff1").value);
@@ -107,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_s2 = document.getElementById("demo_stiff2");
 	output_s2.innerHTML = slider_s2.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_s2.oninput = function() {
 		output_s2.innerHTML = this.value;
 		stiff[1] = Number(document.getElementById("stiff2").value);
@@ -118,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_s3 = document.getElementById("demo_stiff3");
 	output_s3.innerHTML = slider_s3.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_s3.oninput = function() {
 		output_s3.innerHTML = this.value;
 		stiff[2] = Number(document.getElementById("stiff3").value);
@@ -129,23 +122,21 @@ document.addEventListener('DOMContentLoaded', function(){
 	const output_s4 = document.getElementById("demo_stiff4");
 	output_s4.innerHTML = slider_s4.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
 	slider_s4.oninput = function() {
 		output_s4.innerHTML = this.value;
 		stiff[3] = Number(document.getElementById("stiff4").value);
 		restart();
 	};
 
-	const slider_mot = document.getElementById("motion");
-	const output_mot = document.getElementById("demo_motion");
-	output_mot.innerHTML = slider_mot.value; // Display the default slider value
+	//const slider_mot = document.getElementById("motion");
+	//const output_mot = document.getElementById("demo_motion");
+	//output_mot.innerHTML = slider_mot.value; // Display the default slider value
 
-	// Update the current slider value (each time you drag the slider handle)
-	slider_mot.oninput = function() {
-		output_mot.innerHTML = this.value;
-		vibe = Number(document.getElementById("motion").value);
-		restart();
-	};
+	//slider_mot.oninput = function() {
+		//output_mot.innerHTML = this.value;
+		//vibe = Number(document.getElementById("motion").value);
+		//restart();
+	//};
 
 	function calc(ent, center, bldgTop)
 	{
@@ -171,22 +162,22 @@ document.addEventListener('DOMContentLoaded', function(){
 		center[1] /= tot;
 	}
 
-	function curvedArea(ctx, e, gradX, gradY)
-	{
-		ctx.bezierCurveTo(e[0], e[1] += gradY, e[0] += gradX, e[1] += gradY, e[0] += gradX, e[1]);
-		ctx.bezierCurveTo(e[0] += gradX, e[1], e[0] += gradX, e[1] -= gradY, e[0], e[1] -= gradY);
-	}
+	//function curvedArea(ctx, e, gradX, gradY)
+	//{
+		//ctx.bezierCurveTo(e[0], e[1] += gradY, e[0] += gradX, e[1] += gradY, e[0] += gradX, e[1]);
+		//ctx.bezierCurveTo(e[0] += gradX, e[1], e[0] += gradX, e[1] -= gradY, e[0], e[1] -= gradY);
+	//}
 
-	function updateGround(ground, layer2, chg)
-	{
-		ground.forEach(g => {
-			g[0] += chg;
-		});
+	//function updateGround(ground, layer2, chg)
+	//{
+		//ground.forEach(g => {
+			//g[0] += chg;
+		//});
 
-		layer2.forEach(l => {
-			l[0] += chg;
-		});
-	}
+		//layer2.forEach(l => {
+			//l[0] += chg;
+		//});
+	//}
 
 	function drawShape(ctx, v)
 	{
@@ -207,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.stroke();
 	}
 
-	let vibe = 30;
+	//let vibe = 30;
 	let mass = [30, 30, 30, 30];
 	let stiff = [30, 30, 30, 30];
 	let com = [0, 0];	//center of mass
@@ -255,21 +246,21 @@ document.addEventListener('DOMContentLoaded', function(){
 		[[startL[3], defY], [startR[3], defY], [startR[3], defY + height], [startL[3], defY + height]]
 	];
 
-	let ground = [
-		[startL[0] - 50, defY + height + 40],
-		[startL[0], defY + height - 40],
-		[startR[2] + 50, defY + height - 40],
-		[startR[2], defY + height + 40],
-	];
+	//let ground = [
+		//[startL[0] - 50, defY + height + 40],
+		//[startL[0], defY + height - 40],
+		//[startR[2] + 50, defY + height - 40],
+		//[startR[2], defY + height + 40],
+	//];
 	
-	let layer2 = [
-		{...ground[0]},
-		[ground[0][0], defY + height + 40 + thickness],
-		[startR[2] + thickness, defY + height + 40 + thickness],
-		[ground[2][0] + thickness, defY + height - 40 + thickness],
-		{...ground[2]},
-		{...ground[3]},
-	];
+	//let layer2 = [
+		//{...ground[0]},
+		//[ground[0][0], defY + height + 40 + thickness],
+		//[startR[2] + thickness, defY + height + 40 + thickness],
+		//[ground[2][0] + thickness, defY + height - 40 + thickness],
+		//{...ground[2]},
+		//{...ground[3]},
+	//];
 
 	function draw()
 	{
@@ -279,21 +270,40 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
 
-		if(dirn == -1)
-		{
-			updateGround(ground, layer2, vibe / scale);
-		}
+		//if(dirn == -1)
+		//{
+			//updateGround(ground, layer2, vibe / scale);
+		//}
 
-		else
-		{
-			updateGround(ground, layer2, -1 * vibe / scale);
-		}
+		//else
+		//{
+			//updateGround(ground, layer2, -1 * vibe / scale);
+		//}
 
 		ctx.save();
 		ctx.fillStyle = "pink";
 		drawShape(ctx, bldgTop);
 		drawShape(ctx, bldgTopLayer2);
 		ctx.restore();
+
+		mid = [(bldgTop[0][0] + bldgTop[3][0]) / 2, (bldgTop[0][1] + bldgTop[1][1]) / 2];
+		vertical = [
+			[mid[0], bldgTop[1][1]],
+			[mid[0], bldgTop[0][1]],
+		];
+		horizontal = [
+			[(bldgTop[0][0] + bldgTop[1][0]) / 2, mid[1]],
+			[(bldgTop[2][0] + bldgTop[3][0]) / 2, mid[1]],
+		];
+
+		drawShape(ctx, vertical);
+		drawShape(ctx, horizontal);
+		ctx.font = "30px Arial";
+		ctx.fillStyle = "black";
+		ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, (bldgTop[0][1] + mid[1]) / 2);
+		ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, (bldgTop[1][1] + mid[1]) / 2);
+		ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, (bldgTop[2][1] + mid[1]) / 2);
+		ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, (bldgTop[3][1] + mid[1]) / 2);
 
 		calc(mass, com, bldgTop);
 		ctx.fillStyle = "red";
