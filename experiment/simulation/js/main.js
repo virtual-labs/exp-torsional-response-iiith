@@ -58,25 +58,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		calc(mass, com, bldgTop);
 		calc(stiff, cor, bldgTop);
+		mid = [(bldgTop[0][0] + bldgTop[3][0]) / 2, (bldgTop[0][1] + bldgTop[1][1]) / 2];
 		dirn = 0;
 
-		if(cor != mid)
+		if(cor[0] != mid[0] && forceDirn > 1)
 		{
-			if(!forceDirn)
+			dirn = -1;
+			if((cor[0] < mid[0] && forceDirn == 2) || (cor[0] > mid[0] && forceDirn == 3))
 			{
-				if(cor[1] < mid[1])
-				{
-					dirn = 1;
-				}
-
-				else
-				{
-					dirn = -1;
-				}
+				dirn = 1;
 			}
 		}
 
-		mid = [(bldgTop[0][0] + bldgTop[3][0]) / 2, (bldgTop[0][1] + bldgTop[1][1]) / 2];
+		else if(cor[1] != mid[1] && forceDirn <= 1)
+		{
+			dirn = -1;
+			if((cor[1] < mid[1] && forceDirn == 0) || (cor[1] > mid[1] && forceDirn == 1))
+			{
+				dirn = 1;
+			}
+		}
 
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
 	}
@@ -163,28 +164,34 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	function rotation(obj, bldgTop, bldgTopLayer2, mid)
 	{
-		const angle = 1 * math.PI / 180;
-		const rot = [[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]];
-
 		if(!obj.dirn)
 		{
 			return;
 		}
 
-		let temp = [
+		let angle = 1 * math.PI / 180;
+		if(obj.dirn > 0)
+		{
+			angle *= -1;
+		}
+
+		const rot = [[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]];
+
+		const temp = [
 			math.subtract(bldgTop[0], mid), 
 			math.subtract(bldgTop[1], mid), 
 			math.subtract(bldgTop[2], mid), 
 			math.subtract(bldgTop[3], mid), 
 		];
+		const tcom = math.subtract(obj.com, mid);
+		const tcor = math.subtract(obj.cor, mid);
 
-		if(obj.dirn > 0)
-		{
-			bldgTop[0] = math.add(math.multiply(rot, temp[0]), mid);
-			bldgTop[1] = math.add(math.multiply(rot, temp[1]), mid);
-			bldgTop[2] = math.add(math.multiply(rot, temp[2]), mid);
-			bldgTop[3] = math.add(math.multiply(rot, temp[3]), mid);
-		}
+		bldgTop[0] = math.add(math.multiply(rot, temp[0]), mid);
+		bldgTop[1] = math.add(math.multiply(rot, temp[1]), mid);
+		bldgTop[2] = math.add(math.multiply(rot, temp[2]), mid);
+		bldgTop[3] = math.add(math.multiply(rot, temp[3]), mid);
+		obj.com = math.add(math.multiply(rot, tcom), mid);
+		obj.cor = math.add(math.multiply(rot, tcor), mid);
 
 		if(bldgTop[0][1] >= lim || bldgTop[1][1] >= lim || bldgTop[2][1] >= lim || bldgTop[3][1] >= lim)
 		{
@@ -309,12 +316,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore();
 
 		const vertical = [
-			[mid[0], bldgTop[1][1]],
-			[mid[0], bldgTop[0][1]],
+			math.multiply(math.add(bldgTop[1], bldgTop[2]), 0.5),
+			math.multiply(math.add(bldgTop[0], bldgTop[3]), 0.5),
 		];
 		const horizontal = [
-			[(bldgTop[0][0] + bldgTop[1][0]) / 2, mid[1]],
-			[(bldgTop[2][0] + bldgTop[3][0]) / 2, mid[1]],
+			math.multiply(math.add(bldgTop[0], bldgTop[1]), 0.5),
+			math.multiply(math.add(bldgTop[2], bldgTop[3]), 0.5),
 		];
 
 		drawShape(ctx, vertical);
@@ -341,9 +348,16 @@ document.addEventListener('DOMContentLoaded', function(){
 			legs[k] = v;
 		}
 
-		obj = {dirn: dirn};
+		obj = {
+			dirn: dirn,
+			com: com,
+			cor: cor,
+		};
 		rotation(obj, bldgTop, bldgTopLayer2, mid);
 		dirn = obj.dirn;
+		com = obj.com;
+		cor = obj.cor;
+
 		tmHandle = window.setTimeout(draw, 1000 / fps);
 	}
 
