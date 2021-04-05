@@ -37,22 +37,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			[[startL[3], defY], [startR[3], defY], [startR[3], defY + height], [startL[3], defY + height]]
 		];
 
-		//ground = [
-			//[startL[0] - 50, defY + height + 40],
-			//[startL[0], defY + height - 40],
-			//[startR[2] + 50, defY + height - 40],
-			//[startR[2], defY + height + 40],
-		//];
-
-		//layer2 = [
-			//{...ground[0]},
-			//[ground[0][0], defY + height + 40 + thickness],
-			//[startR[2] + thickness, defY + height + 40 + thickness],
-			//[ground[2][0] + thickness, defY + height - 40 + thickness],
-			//{...ground[2]},
-			//{...ground[3]},
-		//];
-
 		if(view)
 		{
 			bldgTop[0][1] = defY + height;
@@ -148,16 +132,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		restart();
 	};
 
-	//const slider_mot = document.getElementById("motion");
-	//const output_mot = document.getElementById("demo_motion");
-	//output_mot.innerHTML = slider_mot.value; // Display the default slider value
-
-	//slider_mot.oninput = function() {
-		//output_mot.innerHTML = this.value;
-		//vibe = Number(document.getElementById("motion").value);
-		//restart();
-	//};
-
 	function calc(ent, center, bldgTop)
 	{
 		let tot = 0;
@@ -186,17 +160,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	//{
 		//ctx.bezierCurveTo(e[0], e[1] += gradY, e[0] += gradX, e[1] += gradY, e[0] += gradX, e[1]);
 		//ctx.bezierCurveTo(e[0] += gradX, e[1], e[0] += gradX, e[1] -= gradY, e[0], e[1] -= gradY);
-	//}
-
-	//function updateGround(ground, layer2, chg)
-	//{
-		//ground.forEach(g => {
-			//g[0] += chg;
-		//});
-
-		//layer2.forEach(l => {
-			//l[0] += chg;
-		//});
 	//}
 
 	function drawShape(ctx, v)
@@ -281,22 +244,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		legs = [];
 	}
 
-	//let ground = [
-		//[startL[0] - 50, defY + height + 40],
-		//[startL[0], defY + height - 40],
-		//[startR[2] + 50, defY + height - 40],
-		//[startR[2], defY + height + 40],
-	//];
-	
-	//let layer2 = [
-		//{...ground[0]},
-		//[ground[0][0], defY + height + 40 + thickness],
-		//[startR[2] + thickness, defY + height + 40 + thickness],
-		//[ground[2][0] + thickness, defY + height - 40 + thickness],
-		//{...ground[2]},
-		//{...ground[3]},
-	//];
-
 	function draw()
 	{
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -304,16 +251,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.lineWidth = lineWidth;
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
-
-		//if(dirn == -1)
-		//{
-			//updateGround(ground, layer2, vibe / scale);
-		//}
-
-		//else
-		//{
-			//updateGround(ground, layer2, -1 * vibe / scale);
-		//}
 
 		ctx.save();
 		ctx.fillStyle = "pink";
