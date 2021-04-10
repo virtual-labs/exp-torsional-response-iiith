@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	let com = [0, 0];	//center of mass
 	let cor = [0, 0];	//center of stiffness/resistance
 	let forceDirn = 0;	//0 --> left to right, 1 --> right to left, 2 --> back to front, 3 --> front to back
-	const lim = 600;
+	const topLim = 600;
+	const sideLim = 120;
 
 	const viewButton = document.getElementById('viewButton');
 	const playButton = document.getElementById('play');
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			[bldgTop[3][0], defY + thickness],
 			[bldgTop[3][0], defY],
 		];
+		bldgSide = [];
 
 		legs = [
 			[[startL[0], defY], [startR[0], defY], [startR[0], defY - height], [startL[0], defY - height]],
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		if(cor[0] != mid[0] && forceDirn > 1)
 		{
 			dirn = -1;
-			if((cor[0] < mid[0] && forceDirn == 2) || (cor[0] > mid[0] && forceDirn == 3))
+			if((cor[0] < mid[0] && forceDirn === 2) || (cor[0] > mid[0] && forceDirn === 3))
 			{
 				dirn = 1;
 			}
@@ -73,9 +75,27 @@ document.addEventListener('DOMContentLoaded', function(){
 		else if(cor[1] != mid[1] && forceDirn <= 1)
 		{
 			dirn = -1;
-			if((cor[1] < mid[1] && forceDirn == 0) || (cor[1] > mid[1] && forceDirn == 1))
+			if((cor[1] < mid[1] && forceDirn === 0) || (cor[1] > mid[1] && forceDirn === 1))
 			{
 				dirn = 1;
+			}
+		}
+
+		if(com[0] != mid[0] && forceDirn > 1)
+		{
+			dirn = 1;
+			if((com[0] < mid[0] && forceDirn === 2) || (com[0] > mid[0] && forceDirn === 3))
+			{
+				dirn = -1;
+			}
+		}
+
+		else if(com[1] != mid[1] && forceDirn <= 1)
+		{
+			dirn = 1;
+			if((com[1] < mid[1] && forceDirn === 0) || (com[1] > mid[1] && forceDirn === 1))
+			{
+				dirn = -1;
 			}
 		}
 
@@ -162,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		restart();
 	};
 
-	function rotation(obj, bldgTop, bldgTopLayer2, mid)
+	function topRotation(obj, bldgTop, bldgTopLayer2, mid)
 	{
 		if(!obj.dirn)
 		{
@@ -170,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		let angle = 1 * math.PI / 180;
+
 		if(obj.dirn > 0)
 		{
 			angle *= -1;
@@ -190,13 +211,101 @@ document.addEventListener('DOMContentLoaded', function(){
 		bldgTop[1] = math.add(math.multiply(rot, temp[1]), mid);
 		bldgTop[2] = math.add(math.multiply(rot, temp[2]), mid);
 		bldgTop[3] = math.add(math.multiply(rot, temp[3]), mid);
+
+		if(bldgTopLayer2.length)
+		{
+			const tempL2 = [
+				math.subtract(bldgTopLayer2[0], mid), 
+				math.subtract(bldgTopLayer2[1], mid), 
+				math.subtract(bldgTopLayer2[2], mid), 
+				math.subtract(bldgTopLayer2[3], mid), 
+			];
+
+			bldgTopLayer2[0] = math.add(math.multiply(rot, tempL2[0]), mid);
+			bldgTopLayer2[1] = math.add(math.multiply(rot, tempL2[1]), mid);
+			bldgTopLayer2[2] = math.add(math.multiply(rot, tempL2[2]), mid);
+			bldgTopLayer2[3] = math.add(math.multiply(rot, tempL2[3]), mid);
+		}
+
+		if(bldgTop[2][0] > bldgTop[3][0])
+		{
+			obj.bldgSide = [
+				{...bldgTopLayer2[3]},
+				{...bldgTopLayer2[2]},
+				{...bldgTop[2]},
+				[bldgTop[2][0], bldgTop[2][1] - thickness],
+			];
+		}
+
 		obj.com = math.add(math.multiply(rot, tcom), mid);
 		obj.cor = math.add(math.multiply(rot, tcor), mid);
 
-		if(bldgTop[0][1] >= lim || bldgTop[1][1] >= lim || bldgTop[2][1] >= lim || bldgTop[3][1] >= lim)
+		if(bldgTop[0][1] >= topLim || bldgTop[1][1] >= topLim || bldgTop[2][1] >= topLim || bldgTop[3][1] >= topLim)
 		{
 			obj.dirn = 0;
 		}
+	}
+
+	function sideRotation(obj, bldgTop, bldgTopLayer2, mid)
+	{
+		if(!obj.dirn)
+		{
+			return;
+		}
+
+		change = 1.5;
+
+		if(obj.dirn < 0)
+		{
+			bldgTop[0] = [bldgTop[0][0] + 2 * change, bldgTop[0][1] - 3 * change]
+			bldgTop[1] = [bldgTop[1][0] - 4 * change, bldgTop[1][1] - 2 * change]
+			bldgTop[2] = [bldgTop[2][0] - 1 * change, bldgTop[2][1] - 0.25 * change]
+			bldgTop[3] = [bldgTop[3][0] + 2.5 * change, bldgTop[3][1] - 1 * change]
+			bldgTopLayer2[0] = [bldgTopLayer2[0][0] + 2 * change, bldgTopLayer2[0][1] - 3 * change]
+			bldgTopLayer2[1] = [bldgTopLayer2[1][0] + 2 * change, bldgTopLayer2[1][1] - 3 * change]
+			bldgTopLayer2[2] = [bldgTopLayer2[2][0] + 2.5 * change, bldgTopLayer2[2][1] - 1 * change]
+			bldgTopLayer2[3] = [bldgTopLayer2[3][0] + 2.5 * change, bldgTopLayer2[3][1] - 1 * change]
+		}
+
+		else
+		{
+			bldgTop[0] = [bldgTop[0][0] - 2.5 * change, bldgTop[0][1] + 1 * change]
+			bldgTop[1] = [bldgTop[1][0] + 1 * change, bldgTop[1][1] - 0.25 * change]
+			bldgTop[2] = [bldgTop[2][0] + 4 * change, bldgTop[2][1] - 3 * change]
+			bldgTop[3] = [bldgTop[3][0] - 2 * change, bldgTop[3][1] - 3 * change]
+			bldgTopLayer2[0] = [bldgTopLayer2[0][0] - 2.5 * change, bldgTopLayer2[0][1] + 1 * change]
+			bldgTopLayer2[1] = [bldgTopLayer2[1][0] - 2.5 * change, bldgTopLayer2[1][1] + 1 * change]
+			bldgTopLayer2[2] = [bldgTopLayer2[2][0] - 2 * change, bldgTopLayer2[2][1] - 3 * change]
+			bldgTopLayer2[3] = [bldgTopLayer2[3][0] - 2 * change, bldgTopLayer2[3][1] - 3 * change]
+		}
+
+		if(dirn === 1 && bldgTop[2][0] > bldgTop[3][0])
+		{
+			obj.bldgSide = [
+				{...bldgTopLayer2[3]},
+				{...bldgTopLayer2[2]},
+				{...bldgTop[2]},
+				[bldgTop[2][0], bldgTop[2][1] - thickness],
+			];
+		}
+
+		else if(dirn === -1 && bldgTop[1][0] < bldgTop[0][0])
+		{
+			obj.bldgSide = [
+				{...bldgTopLayer2[0]},
+				{...bldgTopLayer2[1]},
+				{...bldgTop[1]},
+				[bldgTop[1][0], bldgTop[1][1] - thickness],
+			];
+		}
+
+		if(bldgTop[0][0] <= sideLim || bldgTop[3][0] >= (1200 - sideLim))
+		{
+			obj.dirn = 0;
+		}
+
+		mid[0] = (bldgTop[0][0] + bldgTop[3][0]) / 2;
+		mid[1] = (bldgTop[0][1] + bldgTop[1][1]) / 2;
 	}
 
 	function calc(ent, center, bldgTop)
@@ -214,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				temp[0] = value * (bldgTop[0][0] + 3 * bldgTop[3][0]) / 4;
 			}
 
-			if(i == 0 || i == 3)
+			if(i === 0 || i === 3)
 			{
 				temp[1] = value * (3 * bldgTop[0][1] + bldgTop[1][1]) / 4;
 			}
@@ -226,12 +335,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		center[0] /= tot;
 		center[1] /= tot;
 	}
-
-	//function curvedArea(ctx, e, gradX, gradY)
-	//{
-		//ctx.bezierCurveTo(e[0], e[1] += gradY, e[0] += gradX, e[1] += gradY, e[0] += gradX, e[1]);
-		//ctx.bezierCurveTo(e[0] += gradX, e[1], e[0] += gradX, e[1] -= gradY, e[0], e[1] -= gradY);
-	//}
 
 	function drawShape(ctx, v)
 	{
@@ -293,6 +396,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		[bldgTop[3][0], defY + thickness],
 		[bldgTop[3][0], defY],
 	];
+	let bldgSide = [];
 
 	let legs = [
 		[[startL[0], defY], [startR[0], defY], [startR[0], defY - height], [startL[0], defY - height]],
@@ -313,6 +417,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillStyle = "pink";
 		drawShape(ctx, bldgTop);
 		drawShape(ctx, bldgTopLayer2);
+		drawShape(ctx, bldgSide);
 		ctx.restore();
 
 		const vertical = [
@@ -328,10 +433,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		drawShape(ctx, horizontal);
 		ctx.font = "30px Arial";
 		ctx.fillStyle = "black";
-		ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, 600 - (bldgTop[0][1] + mid[1]) / 2);
-		ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, 600 - (bldgTop[1][1] + mid[1]) / 2);
-		ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, 600 - (bldgTop[2][1] + mid[1]) / 2);
-		ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, 600 - (bldgTop[3][1] + mid[1]) / 2);
+		if(view)
+		{
+			ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, 600 - (bldgTop[0][1] + mid[1]) / 2);
+			ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, 600 - (bldgTop[1][1] + mid[1]) / 2);
+			ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, 600 - (bldgTop[2][1] + mid[1]) / 2);
+			ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, 600 - (bldgTop[3][1] + mid[1]) / 2);
+		}
 
 		ctx.fillStyle = "red";
 		ctx.fillRect(com[0] - 2, 600 - com[1] - 2, 4, 4);
@@ -341,22 +449,33 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(cor[0] - 2, 600 - cor[1] - 2, 4, 4);
 		ctx.fillStyle = fill;
 
-		for(let k = 0; k < legs.length; ++k)
-		{
-			let v = legs[k];
-			drawShape(ctx, v);
-			legs[k] = v;
-		}
+		//for(let k = 0; k < legs.length; ++k)
+		//{
+			//let v = legs[k];
+			//drawShape(ctx, v);
+			//legs[k] = v;
+		//}
 
 		obj = {
 			dirn: dirn,
 			com: com,
 			cor: cor,
+			bldgSide: bldgSide,
 		};
-		rotation(obj, bldgTop, bldgTopLayer2, mid);
+
+		if(view)
+		{
+			topRotation(obj, bldgTop, bldgTopLayer2, mid);
+		}
+		else
+		{
+			sideRotation(obj, bldgTop, bldgTopLayer2, mid);
+		}
+
 		dirn = obj.dirn;
 		com = obj.com;
 		cor = obj.cor;
+		bldgSide = obj.bldgSide;
 
 		tmHandle = window.setTimeout(draw, 1000 / fps);
 	}
