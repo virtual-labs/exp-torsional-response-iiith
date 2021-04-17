@@ -12,11 +12,13 @@ document.addEventListener('DOMContentLoaded', function(){
 	const topLim = 595;
 	const sideLim = 100;
 
+	const forceMenu = document.getElementById('menu');
 	const viewButton = document.getElementById('viewButton');
 	const playButton = document.getElementById('play');
 	const pauseButton = document.getElementById('pause');
 	const restartButton = document.getElementById('restart');
 
+	forceMenu.addEventListener('change', function() { window.clearTimeout(tmHandle); forceDirn = forceMenu.value; restart(); });
 	viewButton.addEventListener('click', function() { window.clearTimeout(tmHandle); view = !view; restart(); });
 	pauseButton.addEventListener('click', function() { window.clearTimeout(tmHandle); });
 	playButton.addEventListener('click', function() {  window.clearTimeout(tmHandle); tmHandle = setTimeout(draw, 1000 / fps); });
@@ -62,6 +64,24 @@ document.addEventListener('DOMContentLoaded', function(){
 		mid = [(bldgTop[0][0] + bldgTop[3][0]) / 2, (bldgTop[0][1] + bldgTop[1][1]) / 2];
 		dirn = 0;
 
+		if(com[0] != mid[0] && forceDirn > 1)
+		{
+			dirn = 1;
+			if((com[0] < mid[0] && forceDirn === 2) || (com[0] > mid[0] && forceDirn === 3))
+			{
+				dirn = -1;
+			}
+		}
+
+		else if(com[1] != mid[1] && forceDirn <= 1)
+		{
+			dirn = 1;
+			if((com[1] < mid[1] && forceDirn === 0) || (com[1] > mid[1] && forceDirn === 1))
+			{
+				dirn = -1;
+			}
+		}
+
 		if(cor[0] != mid[0] && forceDirn > 1)
 		{
 			dirn = -1;
@@ -80,23 +100,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 		}
 
-		if(com[0] != mid[0] && forceDirn > 1)
-		{
-			dirn = 1;
-			if((com[0] < mid[0] && forceDirn === 2) || (com[0] > mid[0] && forceDirn === 3))
-			{
-				dirn = -1;
-			}
-		}
-
-		else if(com[1] != mid[1] && forceDirn <= 1)
-		{
-			dirn = 1;
-			if((com[1] < mid[1] && forceDirn === 0) || (com[1] > mid[1] && forceDirn === 1))
-			{
-				dirn = -1;
-			}
-		}
 	}
 
 	function restart() 
@@ -185,6 +188,18 @@ document.addEventListener('DOMContentLoaded', function(){
 		stiff[3] = Number(document.getElementById("stiff4").value);
 		restart();
 	};
+
+	function canvas_arrow(context, fromx, fromy, tox, toy) {
+		const headlen = 10; // length of head in pixels
+		const dx = tox - fromx;
+		const dy = toy - fromy;
+		const angle = math.atan2(dy, dx);
+		context.moveTo(fromx, fromy);
+		context.lineTo(tox, toy);
+		context.lineTo(tox - headlen * math.cos(angle - math.PI / 6), toy - headlen * math.sin(angle - math.PI / 6));
+		context.moveTo(tox, toy);
+		context.lineTo(tox - headlen * math.cos(angle + math.PI / 6), toy - headlen * math.sin(angle + math.PI / 6));
+	}
 
 	function topRotation(obj, bldgTop, bldgTopLayer2, mid)
 	{
@@ -399,6 +414,24 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.lineWidth = lineWidth;
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
+
+		const len = 50;
+		const leftPad = 50;
+		const topPad = 30;
+		ctx.beginPath();
+		if(forceDirn === 0)
+		{
+			canvas_arrow(ctx, leftPad, topPad, leftPad + len, topPad);
+		}
+		else if(forceDirn === 2)
+		{
+			canvas_arrow(ctx, leftPad, topPad, leftPad, topPad + len);
+		}
+		else
+		{
+			canvas_arrow(ctx, leftPad + len * (forceDirn == 1), topPad + len * (forceDirn == 3), leftPad, topPad);
+		}
+		ctx.stroke();
 
 		for(let k = 0; k < legs.length; ++k)
 		{
