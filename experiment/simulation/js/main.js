@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	let com = [0, 0];	//center of mass
 	let cor = [0, 0];	//center of stiffness/resistance
 	let forceDirn = 0;	//0 --> left to right, 1 --> right to left, 2 --> back to front, 3 --> front to back
+
 	const topLim = 600;
-	const sideLim = 120;
+	const sideLim = 100;
 
 	const viewButton = document.getElementById('viewButton');
 	const playButton = document.getElementById('play');
@@ -21,10 +22,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	playButton.addEventListener('click', function() {  window.clearTimeout(tmHandle); tmHandle = setTimeout(draw, 1000 / fps); });
 	restartButton.addEventListener('click', function() {restart();});
 
-	function restart() 
-	{ 
-		window.clearTimeout(tmHandle); 
-
+	function init()
+	{
 		bldgTop = [
 			[startL[0] - 50, defY + thickness],
 			[startR[0], defY + 150 + thickness],
@@ -41,10 +40,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		bldgSide = [];
 
 		legs = [
-			[[startL[0], defY], [startR[0], defY], [startR[0], defY - height], [startL[0], defY - height]],
-			[[startL[1], defY], [startR[1], defY], [startR[1], defY - 2 * height / 3], [startL[1], defY - 2 * height / 3]],
-			[[startL[2], defY], [startR[2], defY], [startR[2], defY - 2 * height / 3], [startL[2], defY - 2 * height / 3]],
-			[[startL[3], defY], [startR[3], defY], [startR[3], defY - height], [startL[3], defY - height]]
+			[[startL[0], defY], [startL[0], defY - height]],
+			[[startL[1], defY], [startL[1], defY - 2 * height / 3]],
+			[[startR[2], defY], [startR[2], defY - 2 * height / 3]],
+			[[startR[3], defY], [startR[3], defY - height]],
 		];
 
 		if(view)
@@ -98,7 +97,12 @@ document.addEventListener('DOMContentLoaded', function(){
 				dirn = -1;
 			}
 		}
+	}
 
+	function restart() 
+	{ 
+		window.clearTimeout(tmHandle); 
+		init();
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
 	}
 
@@ -246,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 	}
 
-	function sideRotation(obj, bldgTop, bldgTopLayer2, mid)
+	function sideRotation(obj, bldgTop, bldgTopLayer2, legs, mid)
 	{
 		if(!obj.dirn)
 		{
@@ -257,26 +261,34 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		if(obj.dirn < 0)
 		{
-			bldgTop[0] = [bldgTop[0][0] + 2 * change, bldgTop[0][1] - 3 * change]
-			bldgTop[1] = [bldgTop[1][0] - 4 * change, bldgTop[1][1] - 2 * change]
-			bldgTop[2] = [bldgTop[2][0] - 1 * change, bldgTop[2][1] - 0.25 * change]
-			bldgTop[3] = [bldgTop[3][0] + 2.5 * change, bldgTop[3][1] - 1 * change]
-			bldgTopLayer2[0] = [bldgTopLayer2[0][0] + 2 * change, bldgTopLayer2[0][1] - 3 * change]
-			bldgTopLayer2[1] = [bldgTopLayer2[1][0] + 2 * change, bldgTopLayer2[1][1] - 3 * change]
-			bldgTopLayer2[2] = [bldgTopLayer2[2][0] + 2.5 * change, bldgTopLayer2[2][1] - 1 * change]
-			bldgTopLayer2[3] = [bldgTopLayer2[3][0] + 2.5 * change, bldgTopLayer2[3][1] - 1 * change]
+			bldgTop[0] = [bldgTop[0][0] + 2 * change, bldgTop[0][1] - 3 * change];
+			bldgTop[1] = [bldgTop[1][0] - 4 * change, bldgTop[1][1] - 2 * change];
+			bldgTop[2] = [bldgTop[2][0] - 1 * change, bldgTop[2][1] - 0.25 * change];
+			bldgTop[3] = [bldgTop[3][0] + 2.5 * change, bldgTop[3][1] - 1 * change];
+			bldgTopLayer2[0] = [bldgTopLayer2[0][0] + 2 * change, bldgTopLayer2[0][1] - 3 * change];
+			bldgTopLayer2[1] = [bldgTopLayer2[1][0] + 2 * change, bldgTopLayer2[1][1] - 3 * change];
+			bldgTopLayer2[2] = [bldgTopLayer2[2][0] + 2.5 * change, bldgTopLayer2[2][1] - 1 * change];
+			bldgTopLayer2[3] = [bldgTopLayer2[3][0] + 2.5 * change, bldgTopLayer2[3][1] - 1 * change];
+			legs[0] = [[legs[0][0][0] + 2 * change, legs[0][0][1] - 2 * change], [legs[0][1][0] + 2 * change, legs[0][1][1] - 2 * change]];
+			legs[1] = [[legs[1][0][0] - 3 * change, legs[1][0][1] + 1 * change], [legs[1][1][0] - 3 * change, legs[1][1][1] - 2 * change]];
+			legs[2] = [[legs[2][0][0] - 2 * change, legs[2][0][1] - 0.25 * change], [legs[2][1][0] - 2 * change, legs[2][1][1] - 1.25 * change]];
+			legs[3] = [[legs[3][0][0] + 1.5 * change, legs[3][0][1] - 1 * change], [legs[3][1][0] + 1.5 * change, legs[3][1][1] - 1 * change]];
 		}
 
 		else
 		{
-			bldgTop[0] = [bldgTop[0][0] - 2.5 * change, bldgTop[0][1] + 1 * change]
-			bldgTop[1] = [bldgTop[1][0] + 1 * change, bldgTop[1][1] - 0.25 * change]
-			bldgTop[2] = [bldgTop[2][0] + 4 * change, bldgTop[2][1] - 3 * change]
-			bldgTop[3] = [bldgTop[3][0] - 2 * change, bldgTop[3][1] - 3 * change]
-			bldgTopLayer2[0] = [bldgTopLayer2[0][0] - 2.5 * change, bldgTopLayer2[0][1] + 1 * change]
-			bldgTopLayer2[1] = [bldgTopLayer2[1][0] - 2.5 * change, bldgTopLayer2[1][1] + 1 * change]
-			bldgTopLayer2[2] = [bldgTopLayer2[2][0] - 2 * change, bldgTopLayer2[2][1] - 3 * change]
-			bldgTopLayer2[3] = [bldgTopLayer2[3][0] - 2 * change, bldgTopLayer2[3][1] - 3 * change]
+			bldgTop[0] = [bldgTop[0][0] - 2.5 * change, bldgTop[0][1] - 1 * change];
+			bldgTop[1] = [bldgTop[1][0] + 1 * change, bldgTop[1][1] - 0.25 * change];
+			bldgTop[2] = [bldgTop[2][0] + 4 * change, bldgTop[2][1] - 2 * change];
+			bldgTop[3] = [bldgTop[3][0] - 2 * change, bldgTop[3][1] - 3 * change];
+			bldgTopLayer2[0] = [bldgTopLayer2[0][0] - 2.5 * change, bldgTopLayer2[0][1] - 1 * change];
+			bldgTopLayer2[1] = [bldgTopLayer2[1][0] - 2.5 * change, bldgTopLayer2[1][1] - 1 * change];
+			bldgTopLayer2[2] = [bldgTopLayer2[2][0] - 2 * change, bldgTopLayer2[2][1] - 3 * change];
+			bldgTopLayer2[3] = [bldgTopLayer2[3][0] - 2 * change, bldgTopLayer2[3][1] - 3 * change];
+			legs[0] = [[legs[0][0][0] - 1.5 * change, legs[0][0][1] - 1 * change], [legs[0][1][0] - 1.5 * change, legs[0][1][1] - 1 * change]];
+			legs[1] = [[legs[1][0][0] + 2 * change, legs[1][0][1] - 0.25 * change], [legs[1][1][0] + 2 * change, legs[1][1][1] - 1.25 * change]];
+			legs[2] = [[legs[2][0][0] + 3 * change, legs[2][0][1] + 1 * change], [legs[2][1][0] + 3 * change, legs[2][1][1] - 2 * change]];
+			legs[3] = [[legs[3][0][0] - 2 * change, legs[3][0][1] - 2 * change], [legs[3][1][0] - 2 * change, legs[3][1][1] - 2 * change]];
 		}
 
 		if(dirn === 1 && bldgTop[2][0] > bldgTop[3][0])
@@ -299,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			];
 		}
 
-		if(bldgTop[0][0] <= sideLim || bldgTop[3][0] >= (1200 - sideLim))
+		if(bldgTop[0][0] <= (startL[0] - 50 - sideLim) || bldgTop[3][0] >= (startR[3] + 50 + sideLim))
 		{
 			obj.dirn = 0;
 		}
@@ -340,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	{
 		if(!v.length)
 		{
-			return
+			return;
 		}
 
 		ctx.beginPath();
@@ -348,10 +360,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		for(let i = 0; i < v.length; ++i)
 		{
-			let next = (i + 1) % v.length;
-			let ratio = 0.5;
-			let ctrl = [(v[i][0] + v[next][0]) * ratio, (v[i][1] + v[next][1]) * ratio];
-
+			const next = (i + 1) % v.length;
+			const ratio = 0.5;
+			const ctrl = [(v[i][0] + v[next][0]) * ratio, (v[i][1] + v[next][1]) * ratio];
 			ctx.quadraticCurveTo(ctrl[0], 600 - ctrl[1], v[next][0], 600 - v[next][1]);
 		}
 
@@ -369,41 +380,17 @@ document.addEventListener('DOMContentLoaded', function(){
 	const fill = "#A9A9A9";
 	const border = "black";
 	const lineWidth = 1.5;
-
 	const fps = 15;
-	let dirn = 0;	//-1 --> anti-clockwise, 0 --> none, 1 --> clockwise
-	let scale = 5;
 
 	const defY = 400;
 	const breadth = 50;
 	const height = 300;
-	const startL = [250, 250 + breadth, 850, 850 + breadth];
+	const startL = [250, 250 + breadth, 900, 900 + breadth];
 	const startR = [startL[0] + breadth, startL[1] + breadth, startL[2] + breadth, startL[3] + breadth];
 	const thickness = 20;
 
-	let bldgTop = [
-		[startL[0] - 50, defY + thickness],
-		[startR[0], defY + 150 + thickness],
-		[startL[3], defY + 150 + thickness],
-		[startR[3] + 50, defY + thickness],
-	];
-
-	let mid = [(bldgTop[0][0] + bldgTop[3][0]) / 2, (bldgTop[0][1] + bldgTop[1][1]) / 2];
-
-	let bldgTopLayer2 = [
-		[bldgTop[0][0], defY],
-		[bldgTop[0][0], defY + thickness],
-		[bldgTop[3][0], defY + thickness],
-		[bldgTop[3][0], defY],
-	];
-	let bldgSide = [];
-
-	let legs = [
-		[[startL[0], defY], [startR[0], defY], [startR[0], defY - height], [startL[0], defY - height]],
-		[[startL[1], defY], [startR[1], defY], [startR[1], defY - 2 * height / 3], [startL[1], defY - 2 * height / 3]],
-		[[startL[2], defY], [startR[2], defY], [startR[2], defY - 2 * height / 3], [startL[2], defY - 2 * height / 3]],
-		[[startL[3], defY], [startR[3], defY], [startR[3], defY - height], [startL[3], defY - height]]
-	];
+	let bldgTop = [], bldgTopLayer2 = [], bldgSide = [], legs = [], mid, dirn;
+	init();
 
 	function draw()
 	{
@@ -412,6 +399,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.lineWidth = lineWidth;
 		ctx.lineCap = "round";
 		ctx.lineJoin = "round";
+
+		for(let k = 0; k < legs.length; ++k)
+		{
+			const v = legs[k];
+			ctx.save();
+			ctx.lineWidth = 5;
+			drawShape(ctx, v);
+			ctx.restore();
+			legs[k] = v;
+		}
 
 		ctx.save();
 		ctx.fillStyle = "pink";
@@ -449,13 +446,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(cor[0] - 2, 600 - cor[1] - 2, 4, 4);
 		ctx.fillStyle = fill;
 
-		//for(let k = 0; k < legs.length; ++k)
-		//{
-			//let v = legs[k];
-			//drawShape(ctx, v);
-			//legs[k] = v;
-		//}
-
 		obj = {
 			dirn: dirn,
 			com: com,
@@ -469,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 		else
 		{
-			sideRotation(obj, bldgTop, bldgTopLayer2, mid);
+			sideRotation(obj, bldgTop, bldgTopLayer2, legs, mid);
 		}
 
 		dirn = obj.dirn;
