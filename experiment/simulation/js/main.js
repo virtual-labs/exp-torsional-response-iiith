@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	let cor = [0, 0];	//center of stiffness/resistance
 	let forceDirn = 0;	//0 --> left to right, 1 --> right to left, 2 --> back to front, 3 --> front to back
 
-	const topLim = 600;
+	const topLim = 595;
 	const sideLim = 100;
 
 	const viewButton = document.getElementById('viewButton');
@@ -430,21 +430,23 @@ document.addEventListener('DOMContentLoaded', function(){
 		drawShape(ctx, horizontal);
 		ctx.font = "30px Arial";
 		ctx.fillStyle = "black";
+		ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, 600 - (bldgTop[0][1] + mid[1]) / 2);
+		ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, 600 - (bldgTop[1][1] + mid[1]) / 2);
+		ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, 600 - (bldgTop[2][1] + mid[1]) / 2);
+		ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, 600 - (bldgTop[3][1] + mid[1]) / 2);
+
 		if(view)
 		{
-			ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, 600 - (bldgTop[0][1] + mid[1]) / 2);
-			ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, 600 - (bldgTop[1][1] + mid[1]) / 2);
-			ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, 600 - (bldgTop[2][1] + mid[1]) / 2);
-			ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, 600 - (bldgTop[3][1] + mid[1]) / 2);
+			ctx.save();
+			ctx.fillStyle = "red";
+			ctx.fillRect(com[0] - 3, 600 - com[1] - 3, 6, 6);
+			ctx.fillStyle = fill;
+
+			ctx.fillStyle = "blue";
+			ctx.fillRect(cor[0] - 3, 600 - cor[1] - 3, 6, 6);
+			ctx.fillStyle = fill;
+			ctx.restore();
 		}
-
-		ctx.fillStyle = "red";
-		ctx.fillRect(com[0] - 2, 600 - com[1] - 2, 4, 4);
-		ctx.fillStyle = fill;
-
-		ctx.fillStyle = "blue";
-		ctx.fillRect(cor[0] - 2, 600 - cor[1] - 2, 4, 4);
-		ctx.fillStyle = fill;
 
 		obj = {
 			dirn: dirn,
