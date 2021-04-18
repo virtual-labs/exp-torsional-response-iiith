@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	const pauseButton = document.getElementById('pause');
 	const restartButton = document.getElementById('restart');
 
-	forceMenu.addEventListener('change', function() { window.clearTimeout(tmHandle); forceDirn = forceMenu.value; restart(); });
+	forceMenu.addEventListener('change', function() { window.clearTimeout(tmHandle); forceDirn = Number(forceMenu.value); restart(); });
 	viewButton.addEventListener('click', function() { window.clearTimeout(tmHandle); view = !view; restart(); });
 	pauseButton.addEventListener('click', function() { window.clearTimeout(tmHandle); });
 	playButton.addEventListener('click', function() {  window.clearTimeout(tmHandle); tmHandle = setTimeout(draw, 1000 / fps); });
@@ -419,14 +419,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		const leftPad = 50;
 		const topPad = 30;
 		ctx.beginPath();
-		if(forceDirn === 0)
+		if(forceDirn === 0 || forceDirn === 2)
 		{
-			canvas_arrow(ctx, leftPad, topPad, leftPad + len, topPad);
+			canvas_arrow(ctx, leftPad, topPad, leftPad + len * (!forceDirn), topPad + len * forceDirn / 2);
 		}
-		else if(forceDirn === 2)
-		{
-			canvas_arrow(ctx, leftPad, topPad, leftPad, topPad + len);
-		}
+		
 		else
 		{
 			canvas_arrow(ctx, leftPad + len * (forceDirn == 1), topPad + len * (forceDirn == 3), leftPad, topPad);
