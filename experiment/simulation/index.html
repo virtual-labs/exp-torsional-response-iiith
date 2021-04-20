@@ -1,13 +1,115 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
-</head>
-<body>
-		<!-- Your code goes here-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+		<link rel="stylesheet" href="./css/main.css">
+	</head>
 
-	<!-- Add JS at the bottom of HTML file --> 
-        <script src="./js/main.js"></script>
-</body>
+	<body class="page">
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<h1 class="title">Torsional Response of Building</h1>
+			</div>
+		</div>
+
+		<div class="columns is-centered">
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>MASS 1: <span id="demo_mass1"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="mass1">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>MASS 2: <span id="demo_mass2"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="mass2">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>MASS 3: <span id="demo_mass3"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="mass3">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>MASS 4: <span id="demo_mass4"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="mass4">
+				</div>
+			</div>
+		</div>
+
+		<div class="columns is-centered">
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>STIFFNESS 1: <span id="demo_stiff1"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="stiff1">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>STIFFNESS 2: <span id="demo_stiff2"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="stiff2">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>STIFFNESS 3: <span id="demo_stiff3"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="stiff3">
+				</div>
+			</div>
+
+			<div class="column has-text-centered">
+				<div class="slidecontainer">
+					<p>STIFFNESS 4: <span id="demo_stiff4"></span></p>
+					<input type="range" min="1" max="1000" value="30" class="slider" id="stiff4">
+				</div>
+			</div>
+		</div>
+
+		<div class="columns is-centered">
+			<div class="column has-text-centered">
+				<div>
+					External Force Direction 
+				</div>
+				<div class="select is-rounded"> 
+					<select id="forceMenu">
+						<option value=0>Left-to-Right</option>
+						<option value=1>Right-to-Left</option>
+						<option value=2>Back-to-Front</option>
+						<option value=3>Front-to-Back</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<button id="viewButton" class="action-button">Toggle View</button>
+				<button id="play" class="action-button">Play</button>
+				<button id="pause" class="action-button">Pause</button>
+				<button id="restart" class="action-button">Restart</button>
+			</div>
+		</div>
+
+		<div class="columns is-mobile is-centered">
+			<div class="column has-text-centered">
+				<div class="hero is-small">
+					<div class="hero-body">
+						<canvas class="main" id="main"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://unpkg.com/mathjs@9.2.0/lib/browser/math.js"></script>
+		<script src="./js/main.js"></script>
+	</body>
 </html>
