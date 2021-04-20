@@ -1,3 +1,4 @@
+'use strict';
 document.addEventListener('DOMContentLoaded', function(){
 
 	let view = 0;	//0 --> horizontal, 1 --> vertical(from top)
@@ -107,85 +108,26 @@ document.addEventListener('DOMContentLoaded', function(){
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
 	}
 
-	const slider_mass1 = document.getElementById("mass1");
-	const output_mass1 = document.getElementById("demo_mass1");
-	output_mass1.innerHTML = slider_mass1.value; // Display the default slider value
+	const sliders = ["mass1", "mass2", "mass3", "mass4", "stiff1", "stiff2", "stiff3", "stiff4"];
+	sliders.forEach(function(elem, ind){
+		const slider = document.getElementById(elem);
+		const output = document.getElementById("demo_" + elem);
+		output.innerHTML = slider.value; // Display the default slider value
 
-	slider_mass1.oninput = function() {
-		output_mass1.innerHTML = this.value;
-		mass[0] = Number(document.getElementById("mass1").value);
-		restart();
-	};
+		slider.oninput = function() {
+			output.innerHTML = this.value;
+			if(ind < 4)
+			{
+				mass[ind] = Number(document.getElementById(elem).value);
+			}
+			else
+			{
+				stiff[ind - 4] = Number(document.getElementById(elem).value);
+			}
 
-	const slider_mass2 = document.getElementById("mass2");
-	const output_mass2 = document.getElementById("demo_mass2");
-	output_mass2.innerHTML = slider_mass2.value; // Display the default slider value
-
-	slider_mass2.oninput = function() {
-		output_mass2.innerHTML = this.value;
-		mass[1] = Number(document.getElementById("mass2").value);
-		restart();
-	};
-
-	const slider_mass3 = document.getElementById("mass3");
-	const output_mass3 = document.getElementById("demo_mass3");
-	output_mass3.innerHTML = slider_mass3.value; // Display the default slider value
-
-	slider_mass3.oninput = function() {
-		output_mass3.innerHTML = this.value;
-		mass[2] = Number(document.getElementById("mass3").value);
-		restart();
-	};
-
-	const slider_mass4 = document.getElementById("mass4");
-	const output_mass4 = document.getElementById("demo_mass4");
-	output_mass4.innerHTML = slider_mass4.value; // Display the default slider value
-
-	slider_mass4.oninput = function() {
-		output_mass4.innerHTML = this.value;
-		mass[3] = Number(document.getElementById("mass4").value);
-		restart();
-	};
-
-	const slider_stiff1 = document.getElementById("stiff1");
-	const output_stiff1 = document.getElementById("demo_stiff1");
-	output_stiff1.innerHTML = slider_stiff1.value; // Display the default slider value
-
-	slider_stiff1.oninput = function() {
-		output_stiff1.innerHTML = this.value;
-		stiff[0] = Number(document.getElementById("stiff1").value);	
-		restart();
-	};
-
-	const slider_stiff2 = document.getElementById("stiff2");
-	const output_stiff2 = document.getElementById("demo_stiff2");
-	output_stiff2.innerHTML = slider_stiff2.value; // Display the default slider value
-
-	slider_stiff2.oninput = function() {
-		output_stiff2.innerHTML = this.value;
-		stiff[1] = Number(document.getElementById("stiff2").value);
-		restart();
-	};
-
-	const slider_stiff3 = document.getElementById("stiff3");
-	const output_stiff3 = document.getElementById("demo_stiff3");
-	output_stiff3.innerHTML = slider_stiff3.value; // Display the default slider value
-
-	slider_stiff3.oninput = function() {
-		output_stiff3.innerHTML = this.value;
-		stiff[2] = Number(document.getElementById("stiff3").value);
-		restart();
-	};
-
-	const slider_stiff4 = document.getElementById("stiff4");
-	const output_stiff4 = document.getElementById("demo_stiff4");
-	output_stiff4.innerHTML = slider_stiff4.value; // Display the default slider value
-
-	slider_stiff4.oninput = function() {
-		output_stiff4.innerHTML = this.value;
-		stiff[3] = Number(document.getElementById("stiff4").value);
-		restart();
-	};
+			restart();
+		};
+	});
 
 	function canvas_arrow(context, fromX, fromY, toX, toY) {
 		const headlen = 10; // length of head in pixels
@@ -250,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		const change = 1.5;
-		rot = [
+		let rot = [
 			[2 * change, -3 * change],
 			[-4 * change, -2 * change],
 			[-1 * change, -0.25 * change],
@@ -450,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			ctx.restore();
 		}
 
-		obj = {
+		let obj = {
 			dirn: dirn,
 			com: com,
 			cor: cor,
