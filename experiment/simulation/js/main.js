@@ -1,5 +1,3 @@
-//Your JavaScript goes in here
-
 document.addEventListener('DOMContentLoaded', function(){
 
 	let view = 0;	//0 --> horizontal, 1 --> vertical(from top)
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	const topLim = 595;
 	const sideLim = 100;
 
-	const forceMenu = document.getElementById('menu');
+	const forceMenu = document.getElementById('forceMenu');
 	const viewButton = document.getElementById('viewButton');
 	const playButton = document.getElementById('play');
 	const pauseButton = document.getElementById('pause');
@@ -109,96 +107,97 @@ document.addEventListener('DOMContentLoaded', function(){
 		tmHandle = window.setTimeout(draw, 1000 / fps); 
 	}
 
-	const slider_m1 = document.getElementById("mass1");
-	const output_m1 = document.getElementById("demo_mass1");
-	output_m1.innerHTML = slider_m1.value; // Display the default slider value
+	const slider_mass1 = document.getElementById("mass1");
+	const output_mass1 = document.getElementById("demo_mass1");
+	output_mass1.innerHTML = slider_mass1.value; // Display the default slider value
 
-	slider_m1.oninput = function() {
-		output_m1.innerHTML = this.value;
+	slider_mass1.oninput = function() {
+		output_mass1.innerHTML = this.value;
 		mass[0] = Number(document.getElementById("mass1").value);
 		restart();
 	};
 
-	const slider_m2 = document.getElementById("mass2");
-	const output_m2 = document.getElementById("demo_mass2");
-	output_m2.innerHTML = slider_m2.value; // Display the default slider value
+	const slider_mass2 = document.getElementById("mass2");
+	const output_mass2 = document.getElementById("demo_mass2");
+	output_mass2.innerHTML = slider_mass2.value; // Display the default slider value
 
-	slider_m2.oninput = function() {
-		output_m2.innerHTML = this.value;
+	slider_mass2.oninput = function() {
+		output_mass2.innerHTML = this.value;
 		mass[1] = Number(document.getElementById("mass2").value);
 		restart();
 	};
 
-	const slider_m3 = document.getElementById("mass3");
-	const output_m3 = document.getElementById("demo_mass3");
-	output_m3.innerHTML = slider_m3.value; // Display the default slider value
+	const slider_mass3 = document.getElementById("mass3");
+	const output_mass3 = document.getElementById("demo_mass3");
+	output_mass3.innerHTML = slider_mass3.value; // Display the default slider value
 
-	slider_m3.oninput = function() {
-		output_m3.innerHTML = this.value;
+	slider_mass3.oninput = function() {
+		output_mass3.innerHTML = this.value;
 		mass[2] = Number(document.getElementById("mass3").value);
 		restart();
 	};
 
-	const slider_m4 = document.getElementById("mass4");
-	const output_m4 = document.getElementById("demo_mass4");
-	output_m4.innerHTML = slider_m4.value; // Display the default slider value
+	const slider_mass4 = document.getElementById("mass4");
+	const output_mass4 = document.getElementById("demo_mass4");
+	output_mass4.innerHTML = slider_mass4.value; // Display the default slider value
 
-	slider_m4.oninput = function() {
-		output_m4.innerHTML = this.value;
+	slider_mass4.oninput = function() {
+		output_mass4.innerHTML = this.value;
 		mass[3] = Number(document.getElementById("mass4").value);
 		restart();
 	};
 
-	const slider_s1 = document.getElementById("stiff1");
-	const output_s1 = document.getElementById("demo_stiff1");
-	output_s1.innerHTML = slider_s1.value; // Display the default slider value
+	const slider_stiff1 = document.getElementById("stiff1");
+	const output_stiff1 = document.getElementById("demo_stiff1");
+	output_stiff1.innerHTML = slider_stiff1.value; // Display the default slider value
 
-	slider_s1.oninput = function() {
-		output_s1.innerHTML = this.value;
+	slider_stiff1.oninput = function() {
+		output_stiff1.innerHTML = this.value;
 		stiff[0] = Number(document.getElementById("stiff1").value);	
 		restart();
 	};
 
-	const slider_s2 = document.getElementById("stiff2");
-	const output_s2 = document.getElementById("demo_stiff2");
-	output_s2.innerHTML = slider_s2.value; // Display the default slider value
+	const slider_stiff2 = document.getElementById("stiff2");
+	const output_stiff2 = document.getElementById("demo_stiff2");
+	output_stiff2.innerHTML = slider_stiff2.value; // Display the default slider value
 
-	slider_s2.oninput = function() {
-		output_s2.innerHTML = this.value;
+	slider_stiff2.oninput = function() {
+		output_stiff2.innerHTML = this.value;
 		stiff[1] = Number(document.getElementById("stiff2").value);
 		restart();
 	};
 
-	const slider_s3 = document.getElementById("stiff3");
-	const output_s3 = document.getElementById("demo_stiff3");
-	output_s3.innerHTML = slider_s3.value; // Display the default slider value
+	const slider_stiff3 = document.getElementById("stiff3");
+	const output_stiff3 = document.getElementById("demo_stiff3");
+	output_stiff3.innerHTML = slider_stiff3.value; // Display the default slider value
 
-	slider_s3.oninput = function() {
-		output_s3.innerHTML = this.value;
+	slider_stiff3.oninput = function() {
+		output_stiff3.innerHTML = this.value;
 		stiff[2] = Number(document.getElementById("stiff3").value);
 		restart();
 	};
 
-	const slider_s4 = document.getElementById("stiff4");
-	const output_s4 = document.getElementById("demo_stiff4");
-	output_s4.innerHTML = slider_s4.value; // Display the default slider value
+	const slider_stiff4 = document.getElementById("stiff4");
+	const output_stiff4 = document.getElementById("demo_stiff4");
+	output_stiff4.innerHTML = slider_stiff4.value; // Display the default slider value
 
-	slider_s4.oninput = function() {
-		output_s4.innerHTML = this.value;
+	slider_stiff4.oninput = function() {
+		output_stiff4.innerHTML = this.value;
 		stiff[3] = Number(document.getElementById("stiff4").value);
 		restart();
 	};
 
-	function canvas_arrow(context, fromx, fromy, tox, toy) {
+	function canvas_arrow(context, fromX, fromY, toX, toY) {
 		const headlen = 10; // length of head in pixels
-		const dx = tox - fromx;
-		const dy = toy - fromy;
+		const dx = toX - fromX;
+		const dy = toY - fromY;
 		const angle = math.atan2(dy, dx);
-		context.moveTo(fromx, fromy);
-		context.lineTo(tox, toy);
-		context.lineTo(tox - headlen * math.cos(angle - math.PI / 6), toy - headlen * math.sin(angle - math.PI / 6));
-		context.moveTo(tox, toy);
-		context.lineTo(tox - headlen * math.cos(angle + math.PI / 6), toy - headlen * math.sin(angle + math.PI / 6));
+
+		context.moveTo(fromX, fromY);
+		context.lineTo(toX, toY);
+		context.lineTo(toX - headlen * math.cos(angle - math.PI / 6), toY - headlen * math.sin(angle - math.PI / 6));
+		context.moveTo(toX, toY);
+		context.lineTo(toX - headlen * math.cos(angle + math.PI / 6), toY - headlen * math.sin(angle + math.PI / 6));
 	}
 
 	function topRotation(obj, bldgTop, bldgTopLayer2, mid)
@@ -217,34 +216,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		const rot = [[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]];
 
-		const temp = [
-			math.subtract(bldgTop[0], mid), 
-			math.subtract(bldgTop[1], mid), 
-			math.subtract(bldgTop[2], mid), 
-			math.subtract(bldgTop[3], mid), 
-		];
 		const tcom = math.subtract(obj.com, mid);
 		const tcor = math.subtract(obj.cor, mid);
 
-		bldgTop[0] = math.add(math.multiply(rot, temp[0]), mid);
-		bldgTop[1] = math.add(math.multiply(rot, temp[1]), mid);
-		bldgTop[2] = math.add(math.multiply(rot, temp[2]), mid);
-		bldgTop[3] = math.add(math.multiply(rot, temp[3]), mid);
-
-		if(bldgTopLayer2.length)
-		{
-			const tempL2 = [
-				math.subtract(bldgTopLayer2[0], mid), 
-				math.subtract(bldgTopLayer2[1], mid), 
-				math.subtract(bldgTopLayer2[2], mid), 
-				math.subtract(bldgTopLayer2[3], mid), 
-			];
-
-			bldgTopLayer2[0] = math.add(math.multiply(rot, tempL2[0]), mid);
-			bldgTopLayer2[1] = math.add(math.multiply(rot, tempL2[1]), mid);
-			bldgTopLayer2[2] = math.add(math.multiply(rot, tempL2[2]), mid);
-			bldgTopLayer2[3] = math.add(math.multiply(rot, tempL2[3]), mid);
-		}
+		bldgTop.forEach(function(vertex, ind){
+			bldgTop[ind] = math.add(math.multiply(rot, math.subtract(vertex, mid)), mid);
+		});
 
 		if(bldgTop[2][0] > bldgTop[3][0])
 		{
@@ -272,41 +249,41 @@ document.addEventListener('DOMContentLoaded', function(){
 			return;
 		}
 
-		change = 1.5;
+		const change = 1.5;
+		rot = [
+			[2 * change, -3 * change],
+			[-4 * change, -2 * change],
+			[-1 * change, -0.25 * change],
+			[2.5 * change, -1 * change],
+		];
 
-		if(obj.dirn < 0)
+		if(obj.dirn === 1)
 		{
-			bldgTop[0] = [bldgTop[0][0] + 2 * change, bldgTop[0][1] - 3 * change];
-			bldgTop[1] = [bldgTop[1][0] - 4 * change, bldgTop[1][1] - 2 * change];
-			bldgTop[2] = [bldgTop[2][0] - 1 * change, bldgTop[2][1] - 0.25 * change];
-			bldgTop[3] = [bldgTop[3][0] + 2.5 * change, bldgTop[3][1] - 1 * change];
-			bldgTopLayer2[0] = [bldgTopLayer2[0][0] + 2 * change, bldgTopLayer2[0][1] - 3 * change];
-			bldgTopLayer2[1] = [bldgTopLayer2[1][0] + 2 * change, bldgTopLayer2[1][1] - 3 * change];
-			bldgTopLayer2[2] = [bldgTopLayer2[2][0] + 2.5 * change, bldgTopLayer2[2][1] - 1 * change];
-			bldgTopLayer2[3] = [bldgTopLayer2[3][0] + 2.5 * change, bldgTopLayer2[3][1] - 1 * change];
+			rot.reverse();
+			rot.forEach(r => {
+				r[0] *= -1;
+			});
+
+			legs[0] = [[legs[0][0][0] - 1.5 * change, legs[0][0][1] - 1 * change], [legs[0][1][0] - 1.5 * change, legs[0][1][1] - 1 * change]];
+			legs[1] = [[legs[1][0][0] + 2 * change, legs[1][0][1] - 0.25 * change], [legs[1][1][0] + 2 * change, legs[1][1][1] - 1.25 * change]];
+			legs[2] = [[legs[2][0][0] + 3 * change, legs[2][0][1] + 1 * change], [legs[2][1][0] + 3 * change, legs[2][1][1] - 2 * change]];
+			legs[3] = [[legs[3][0][0] - 2 * change, legs[3][0][1] - 2 * change], [legs[3][1][0] - 2 * change, legs[3][1][1] - 2 * change]];
+		}
+		
+		else
+		{
 			legs[0] = [[legs[0][0][0] + 2 * change, legs[0][0][1] - 2 * change], [legs[0][1][0] + 2 * change, legs[0][1][1] - 2 * change]];
 			legs[1] = [[legs[1][0][0] - 3 * change, legs[1][0][1] + 1 * change], [legs[1][1][0] - 3 * change, legs[1][1][1] - 2 * change]];
 			legs[2] = [[legs[2][0][0] - 2 * change, legs[2][0][1] - 0.25 * change], [legs[2][1][0] - 2 * change, legs[2][1][1] - 1.25 * change]];
 			legs[3] = [[legs[3][0][0] + 1.5 * change, legs[3][0][1] - 1 * change], [legs[3][1][0] + 1.5 * change, legs[3][1][1] - 1 * change]];
 		}
 
-		else
-		{
-			bldgTop[0] = [bldgTop[0][0] - 2.5 * change, bldgTop[0][1] - 1 * change];
-			bldgTop[1] = [bldgTop[1][0] + 1 * change, bldgTop[1][1] - 0.25 * change];
-			bldgTop[2] = [bldgTop[2][0] + 4 * change, bldgTop[2][1] - 2 * change];
-			bldgTop[3] = [bldgTop[3][0] - 2 * change, bldgTop[3][1] - 3 * change];
-			bldgTopLayer2[0] = [bldgTopLayer2[0][0] - 2.5 * change, bldgTopLayer2[0][1] - 1 * change];
-			bldgTopLayer2[1] = [bldgTopLayer2[1][0] - 2.5 * change, bldgTopLayer2[1][1] - 1 * change];
-			bldgTopLayer2[2] = [bldgTopLayer2[2][0] - 2 * change, bldgTopLayer2[2][1] - 3 * change];
-			bldgTopLayer2[3] = [bldgTopLayer2[3][0] - 2 * change, bldgTopLayer2[3][1] - 3 * change];
-			legs[0] = [[legs[0][0][0] - 1.5 * change, legs[0][0][1] - 1 * change], [legs[0][1][0] - 1.5 * change, legs[0][1][1] - 1 * change]];
-			legs[1] = [[legs[1][0][0] + 2 * change, legs[1][0][1] - 0.25 * change], [legs[1][1][0] + 2 * change, legs[1][1][1] - 1.25 * change]];
-			legs[2] = [[legs[2][0][0] + 3 * change, legs[2][0][1] + 1 * change], [legs[2][1][0] + 3 * change, legs[2][1][1] - 2 * change]];
-			legs[3] = [[legs[3][0][0] - 2 * change, legs[3][0][1] - 2 * change], [legs[3][1][0] - 2 * change, legs[3][1][1] - 2 * change]];
-		}
+		bldgTop.forEach(function(v, i){
+			bldgTop[i] = [v[0] + rot[i][0], v[1] + rot[i][1]];
+			bldgTopLayer2[i] = [bldgTopLayer2[i][0] + rot[3 * (i > 1)][0], bldgTopLayer2[i][1] + rot[3 * (i > 1)][1]];
+		});
 
-		if(dirn === 1 && bldgTop[2][0] > bldgTop[3][0])
+		if(obj.dirn === 1 && bldgTop[2][0] > bldgTop[3][0])
 		{
 			obj.bldgSide = [
 				{...bldgTopLayer2[3]},
@@ -316,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			];
 		}
 
-		else if(dirn === -1 && bldgTop[1][0] < bldgTop[0][0])
+		else if(obj.dirn === -1 && bldgTop[1][0] < bldgTop[0][0])
 		{
 			obj.bldgSide = [
 				{...bldgTopLayer2[0]},
@@ -373,13 +350,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.beginPath();
 		ctx.moveTo(v[0][0], 600 - v[0][1]);
 
-		for(let i = 0; i < v.length; ++i)
-		{
-			const next = (i + 1) % v.length;
+		v.forEach(function(vertex, ind){
+			const next = (ind + 1) % v.length;
 			const ratio = 0.5;
-			const ctrl = [(v[i][0] + v[next][0]) * ratio, (v[i][1] + v[next][1]) * ratio];
+			const ctrl = [(v[ind][0] + v[next][0]) * ratio, (v[ind][1] + v[next][1]) * ratio];
 			ctx.quadraticCurveTo(ctrl[0], 600 - ctrl[1], v[next][0], 600 - v[next][1]);
-		}
+		});
 
 		ctx.closePath();
 		ctx.fill();
@@ -430,15 +406,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 		ctx.stroke();
 
-		for(let k = 0; k < legs.length; ++k)
-		{
-			const v = legs[k];
+		legs.forEach(function(leg, k){
 			ctx.save();
 			ctx.lineWidth = 5;
-			drawShape(ctx, v);
+			drawShape(ctx, leg);
 			ctx.restore();
-			legs[k] = v;
-		}
+		});
 
 		ctx.save();
 		ctx.fillStyle = "pink";
@@ -460,10 +433,9 @@ document.addEventListener('DOMContentLoaded', function(){
 		drawShape(ctx, horizontal);
 		ctx.font = "30px Arial";
 		ctx.fillStyle = "black";
-		ctx.fillText(1, (bldgTop[0][0] + mid[0]) / 2, 600 - (bldgTop[0][1] + mid[1]) / 2);
-		ctx.fillText(2, (bldgTop[1][0] + mid[0]) / 2, 600 - (bldgTop[1][1] + mid[1]) / 2);
-		ctx.fillText(3, (bldgTop[2][0] + mid[0]) / 2, 600 - (bldgTop[2][1] + mid[1]) / 2);
-		ctx.fillText(4, (bldgTop[3][0] + mid[0]) / 2, 600 - (bldgTop[3][1] + mid[1]) / 2);
+		bldgTop.forEach(function(vertex, ind){
+			ctx.fillText(ind + 1, (vertex[0] + mid[0]) / 2, 600 - (vertex[1] + mid[1]) / 2);
+		});
 
 		if(view)
 		{
