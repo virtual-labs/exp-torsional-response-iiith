@@ -12,3 +12,6 @@ Start the experiment with the default values of mass and stiffness for all 4 sec
 ## Observation 3:
  1. Vary the direction of external force and note the change in rotation/torsion direction for fixed mass and stiffness values.
  2. You may note the position of the COR and COM in the top view, the force direction and the corresponding rotation direction.
+
+## NOTE:
+ 1. The simulation does not start until the parameters are changed to make the building unsymmetrical in some way such as by imbalanced positions of the COM and COR.
