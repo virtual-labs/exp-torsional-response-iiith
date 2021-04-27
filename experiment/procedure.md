@@ -15,3 +15,4 @@ Start the experiment with the default values of mass and stiffness for all 4 sec
 
 ## NOTE:
  1. The simulation does not start until the parameters are changed to make the building unsymmetrical in some way such as by imbalanced positions of the COM and COR.
+ 2. The side view looks like a table but it represents a building with 4 pillars.
