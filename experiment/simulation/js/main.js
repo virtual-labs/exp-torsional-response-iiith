@@ -404,8 +404,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		{
 			ctx.font = "20px Arial";
 			ctx.fillStyle = "black";
-			ctx.fillText("Red --> COM", 5, 60);
-			ctx.fillText("Blue --> COR", 5, 90);
+			ctx.fillText("Red --> COM", 1070, 25);
+			ctx.fillText("Blue --> COR", 1070, 55);
 			topRotation(obj, bldgTop, bldgTopLayer2, mid);
 		}
 		else
