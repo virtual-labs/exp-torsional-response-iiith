@@ -1,4 +1,5 @@
 'use strict';
+
 document.addEventListener('DOMContentLoaded', function(){
 
 	let view = 0;	//0 --> horizontal, 1 --> vertical(from top)
@@ -401,6 +402,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		if(view)
 		{
+			ctx.font = "20px Arial";
+			ctx.fillStyle = "black";
+			ctx.fillText("Red --> COM", 1070, 25);
+			ctx.fillText("Blue --> COR", 1070, 55);
 			topRotation(obj, bldgTop, bldgTopLayer2, mid);
 		}
 		else
