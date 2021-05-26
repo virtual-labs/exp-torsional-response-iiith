@@ -14,4 +14,5 @@ where
 <img src="images/eq3.PNG"> 
 
 <br>
+
 [Read More](8.theory.pdf)
