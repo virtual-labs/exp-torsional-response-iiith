@@ -15,4 +15,4 @@ where
 
 <br>
 
-[Read More](8.theory.pdf)
+[Read More](docs/8.theory.pdf)

@@ -3,4 +3,4 @@ Here mass of slab is given as 4 parts and stiffness as 4 parts in both direction
 **Observation 1:**
 Here in this stage, user can change mass of slab corresponding to default value by keeping all other as default values. Observe the difference in 3 directions response. 
 
-[Read More](8manual.pdf)
+[Read More](docs/8.manual.pdf)
